@@ -9,7 +9,30 @@ class Diagram:
         self.G = nx.DiGraph()
 
     def add_node(self, node):
+        key = (
+        node.port,
+        node.location,
+        node.unit,
+        node.ts,
+        node.color,
+        node.role,
+        )   
+        for data in self.G.nodes:
+            existing_key = (
+            data.port,
+            data.location,
+            data.unit,
+            data.ts,
+            data.color,
+            data.role,
+            )
+
+            if key == existing_key:
+                return False,data
+
         self.G.add_node(node, label=node.get_label(), color=node.color)
+        # self.G.add_node(node,port=node.port,location=node.location,unit=node.unit,ts=node.ts,color=node.color,role=node.role, label=node.get_label())
+        return True,None
 
     def add_edge(self, nodeX, nodeY, connection):
         self.G.add_edge(nodeX, nodeY, connection=connection)
